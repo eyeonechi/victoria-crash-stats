@@ -355,4 +355,4 @@ if __name__ == '__main__':
     # Run data processing section.
     # main()
     # Run server handling section.
-    app.run(port=os.environ.get('PORT'))
+    app.run(host=os.environ.get('HOST'), port=os.environ.get('PORT'))
