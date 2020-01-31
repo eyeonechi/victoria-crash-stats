@@ -1,4 +1,4 @@
--e git://github.com/matplotlib/basemap.git
+-e git://github.com/matplotlib/basemap.git#egg=basemap
 Flask==1.1.1
 matplotlib==3.1.1
 numpy==1.17.3
