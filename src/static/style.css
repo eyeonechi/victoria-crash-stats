@@ -1,0 +1,233 @@
+/* INFO20002 Foundation of Informatics
+ * Semester 1 2016
+ * Project Phase 3
+ * Bowen Lu                      Ivan Ken Weng Chee
+ * 685020                        736901
+ * b.lu7@student.unimelb.edu.au  ichee@student.unimelb.edu.au
+ */
+
+body {
+	background-attachment	: fixed;
+	background-color		: black;
+	background-size			: cover;
+	color					: white;
+	font-family				: sans-serif;
+	font-size				: 14px;
+	margin					: 0;
+	padding					: 0;
+	overflow-x: hidden;
+}
+
+div {
+	display					: inline-block;
+	text-align				: center;
+}
+
+fieldset {
+	background				: linear-gradient(black, gray);
+	border					: 2px solid;
+	border-color			: white;
+	border-radius			: 10px;
+	display					: inline-block;
+	font-family				: sans-serif;
+	font-size				: 16px;
+	margin					: 5px;
+	padding					: 10px;
+	text-align				: center;
+	vertical-align			: top;
+	overflow-x: none
+}
+
+fieldset:hover {
+	background				: linear-gradient(black, red);
+}
+
+figcaption {
+	display					: block;
+}
+
+figure {
+	display					: block;
+	margin					: 0 auto 2em;
+}
+
+h2 {
+	color					: yellow;
+	font-style				: bold;
+	font-size				: 28px;
+	text-align				: center;
+}
+
+h3 {
+	color					: white;
+	font-size				: 20px;
+	text-align				: center;
+}
+
+h4 {
+	color					: white;
+	font-family				: sans-serif;
+	font-size				: 16px;
+	text-align				: center;
+}
+
+img {
+	height					: auto;
+	width					: auto;
+}
+
+input {
+	background				: linear-gradient(white, gray);
+	border					: 2px solid;
+	border-color			: white;
+	border-radius			: 5px;
+	color					: black;
+	font-family				: sans-serif;
+	font-size				: 14px;
+}
+
+input:hover {
+	background				: linear-gradient(white, orange);
+}
+
+p {
+	text-align				: left;
+}
+
+select {
+	font-family				: sans-serif;
+	font-size				: 14px;
+}
+
+table {
+	background				: linear-gradient(black, gray);
+	border					: 2px white;
+	color					: white;
+	overflow				: auto;
+	text-align				: left;
+	width					: fixed;
+}
+
+td {
+	white-space				: nowrap;
+}
+
+th {
+	white-space				: nowrap;
+}
+
+ul.tab {
+	background				: linear-gradient(black, gray);
+	border					: 2px solid;
+	border-color			: white;
+	border-radius			: 0px 0px 10px 10px;
+	border-top				: none;
+	list-style-type			: none;
+	margin					: 0;
+	overflow				: hidden;
+	padding					: 0;
+}
+
+ul.subtab {
+	background				: linear-gradient(black, gray);
+	border					: 2px solid;
+	border-color			: white;
+	border-radius			: 10px;
+	list-style-type			: none;
+	margin					: 0;
+	overflow				: hidden;
+	padding					: 0;
+}
+
+ul.tab li  {
+	float					: left;
+}
+
+ul.subtab li  {
+	float					: left;
+}
+
+ul.tab li a {
+	color					: white;
+	display					: inline-block;
+	font-family				: sans-serif;
+	font-size				: 18px;
+	padding					: 14px 16px;
+	text-decoration			: none;
+	text-align				: center;
+	transition				: 0.3s;
+}
+
+ul.subtab li a {
+	color					: white;
+	display					: inline-block;
+	font-family				: sans-serif;
+	font-size				: 18px;
+	padding					: 14px 16px;
+	text-decoration			: none;
+	text-align				: center;
+	transition				: 0.3s;
+}
+
+ul.tab li a:hover {
+	background				: linear-gradient(black, red);
+}
+
+ul.subtab li a:hover {
+	background				: linear-gradient(black, red);
+}
+
+ul.tab li a:focus {
+	background				: linear-gradient(red, black);
+}
+
+ul.subtab li a:focus {
+	background				: linear-gradient(red, black);
+}
+
+.input {
+	text-align				: right;
+}
+
+.map {
+	height					: 70%;
+	width					: 70%;
+}
+
+.overflow {
+	display: block;
+	overflow-x				: auto;
+	text-align				: left;
+	width					: 97%;
+}
+
+.tabcontent {
+	animation				: fadeEffect 1s;
+	border-top				: none;
+	display					: none;
+	padding					: 6px 12px;
+	-webkit-animation		: fadeEffect 1s;
+}
+
+.subtabcontent {
+	animation				: fadeEffect 1s;
+	display					: none;
+	padding					: 6px 12px;
+	-webkit-animation		: fadeEffect 1s;
+}
+
+@-webkit-keyframes fadeEffect {
+	from {
+		opacity				: 0;
+	} to {
+		opacity				: 1;
+	}
+}
+
+@keyframes fadeEffect {
+	from {
+		opacity				: 0;
+	} to {
+		opacity				: 1;
+	}
+}

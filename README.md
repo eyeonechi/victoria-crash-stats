@@ -15,3 +15,7 @@ Information about road crashes in Victoria
 * Open phase3.html in a web browser. (FireFox gives a strange error for some reason)
 * Use an anaconda prompt, cd to current directory and run
 python phase3.py
+
+# Dependencies:
+* sudo apt install libgeos
+* pip3 install --user git+https://github.com/matplotlib/basemap.git

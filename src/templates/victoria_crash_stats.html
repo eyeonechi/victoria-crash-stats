@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>Victoria Crash Stats</title>
+		<link rel='stylesheet' type='text/css' href='static/style.css'/>
+		<script src='static/javascript.js'></script>
+		<script src='static/jquery.js'></script>
+		<script>
+			$(document).ready(function() {
+				var event;
+				switchTab(event, 'homeTab', 'static/images/homeTab.jpg');
+			});
+		</script>
+	</head>
+	<body>
+		<ul class='tab'>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'homeTab', 'static/images/homeTab.jpg')">Home</a></li>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'dataTab', 'static/images/dataTab.jpg')">Dataset</a></li>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'pivotTab', 'static/images/pivotTab.jpg')">Pivot Table</a></li>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'visualTab', 'static/images/visualTab.jpg')">Visualisations</a></li>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'mapTab', 'static/images/mapTab.jpg')">Map</a></li>
+			<li><a href='#' class='tablinks' onclick="switchTab(event,
+				'aboutTab', 'static/images/aboutTab.jpg')">About</a></li>
+		</ul>
+		<div id='homeTab' class='tabcontent'>
+			<h2>INFO20002 Foundations of Informatics</h2>
+			<h2>Semester 1 2016</h2>
+			<h2>Project Phase 3</h2>
+			<h2>Crash Stats</h2>
+			<h4>Information about road crashes in Victoria</h4>
+			<a target='_blank' href='https://www.data.vic.gov.au/data/dataset
+				/crash-stats-data-extract'>
+			<h4>https://www.data.vic.gov.au/data/dataset
+				/crash-stats-data-extract</h4></a>
+		</div>
+		<div id='dataTab' class='tabcontent'>
+			<form id='dataForm' action='/submission' method='POST'>
+				<fieldset class='input'>
+					<legend>Select Filter</legend>
+					<p>Select from presets or enter custom text to filter</p>
+					<p>Leave a field blank for all related data</p>
+					<p>Large quantities of data might take time to load</p>
+					<br>
+					<label>Year: </label>
+					<input list='datayears' name='year'>
+						<datalist id='datayears'>
+							<option value='2016'>
+							<option value='2015'>
+							<option value='2014'>
+							<option value='2013'>
+							<option value='2012'>
+							<option value='2011'>
+							<option value='2010'>
+							<option value='2009'>
+							<option value='2008'>
+							<option value='2007'>
+							<option value='2006'>
+						</datalist>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>Month: </label>
+					<input list='datamonths' name='month'>
+						<datalist id='datamonths'>
+							<option value='January'>
+							<option value='February'>
+							<option value='March'>
+							<option value='April'>
+							<option value='May'>
+							<option value='June'>
+							<option value='July'>
+							<option value='August'>
+							<option value='September'>
+							<option value='October'>
+							<option value='November'>
+							<option value='December'>
+						</datalist>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>Date: </label>
+					<input list='datadates' name='date'>
+						<datalist id='datadates'>
+							<option value='1'>
+							<option value='2'>
+							<option value='3'>
+							<option value='4'>
+							<option value='5'>
+							<option value='6'>
+							<option value='7'>
+							<option value='8'>
+							<option value='9'>
+							<option value='10'>
+							<option value='11'>
+							<option value='12'>
+							<option value='13'>
+							<option value='14'>
+							<option value='15'>
+							<option value='16'>
+							<option value='17'>
+							<option value='18'>
+							<option value='19'>
+							<option value='20'>
+							<option value='21'>
+							<option value='22'>
+							<option value='23'>
+							<option value='24'>
+							<option value='25'>
+							<option value='26'>
+							<option value='27'>
+							<option value='28'>
+							<option value='29'>
+							<option value='30'>
+							<option value='31'>
+						</datalist>
+					<br><br>
+					<label>Day: </label>
+					<input list='datadays' name='day'>
+						<datalist id='datadays'>
+							<option value='Monday'>
+							<option value='Tuesday'>
+							<option value='Wednesday'>
+							<option value='Thursday'>
+							<option value='Friday'>
+							<option value='Saturday'>
+							<option value='Sunday'>
+						</datalist>
+					&nbsp;&nbsp;
+					<label>Accident : </label>
+					<input list='dataaccidents' name='accident'>
+						<datalist id='dataaccidents'>
+							<option value='Collision with a fixed object'>
+							<option value='Collision with some other object'>
+							<option value='Collision with vehicle'>
+							<option value='Fall from or in moving vehicle'>
+							<option value='No collision and no object struck'>
+							<option value='Other accident'>
+							<option value='Struck animal'>
+							<option value='Struck Pedestrian'>
+							<option value='Vehicle overturned (no collision)'>
+						</datalist>
+					<label>Lighting : </label>
+					<input list='datalightings' name='lighting'>
+						<datalist id='datalightings'>
+							<option value='Day'>
+							<option value='Dark No street lights'>
+							<option value='Dark Street lights off'>
+							<option value='Dark Street lights on'>
+							<option value='Dark Street lights unknown'>
+							<option value='Dusk/Dawn'>
+							<option value='Unknown'>
+						</datalist>
+					<br><br>
+					<label>Definition : </label>
+					<input list='datadefinitions' name='definition'>
+						<datalist id='datadefinitions'>
+						</datalist>
+					<label>Geometry : </label>
+					<input list='datageometries' name='geometry'>
+						<datalist id='datageometries'>
+							<option value='Cross intersection'>
+							<option value='Dead end'>
+							<option value='Multiple intersection'>
+							<option value='Not at intersection'>
+							<option value='Private property'>
+							<option value='Road closure'>
+							<option value='T intersection'>
+							<option value='Unknown'>
+							<option value='Y intersection'>
+						</datalist>
+					<label>Severity : </label>
+					<input list='dataseverities' name='severity'>
+						<datalist id='dataseverities'>
+							<option value='1'>
+							<option value='2'>
+							<option value='3'>
+							<option value='4'>
+						</datalist>
+					<br><br>
+				</fieldset>
+			</form>
+			<fieldset class='overflow'>
+				<input type='submit' value='View Data'
+					onclick="submission(event, 'dataset', '#dataForm', '#dataTable')"/>
+				<table id='dataTable' class='overflow'></table>
+			</fieldset>
+		</div>
+		<div id='pivotTab' class='tabcontent'>
+			<form id='pivotForm' action='/submission' method='POST'>
+				<fieldset class='input'>
+					<legend>Select Filter</legend>
+					<p>Select from presets or enter custom text to filter</p>
+					<p>Leave a field blank for all related data</p>
+					<p>Large quantities of data might take time to load</p>
+					<br>
+					<label>Year: </label>
+					<input list='pivotyears' name='year'>
+						<datalist id='pivotyears'>
+							<option value='2016'>
+							<option value='2015'>
+							<option value='2014'>
+							<option value='2013'>
+							<option value='2012'>
+							<option value='2011'>
+							<option value='2010'>
+							<option value='2009'>
+							<option value='2008'>
+							<option value='2007'>
+							<option value='2006'>
+						</datalist>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>Month: </label>
+					<input list='pivotmonths' name='month'>
+						<datalist id='pivotmonths'>
+							<option value='January'>
+							<option value='February'>
+							<option value='March'>
+							<option value='April'>
+							<option value='May'>
+							<option value='June'>
+							<option value='July'>
+							<option value='August'>
+							<option value='September'>
+							<option value='October'>
+							<option value='November'>
+							<option value='December'>
+						</datalist>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>Date: </label>
+					<input list='pivotdates' name='date'>
+						<datalist id='pivotdates'>
+							<option value='1'>
+							<option value='2'>
+							<option value='3'>
+							<option value='4'>
+							<option value='5'>
+							<option value='6'>
+							<option value='7'>
+							<option value='8'>
+							<option value='9'>
+							<option value='10'>
+							<option value='11'>
+							<option value='12'>
+							<option value='13'>
+							<option value='14'>
+							<option value='15'>
+							<option value='16'>
+							<option value='17'>
+							<option value='18'>
+							<option value='19'>
+							<option value='20'>
+							<option value='21'>
+							<option value='22'>
+							<option value='23'>
+							<option value='24'>
+							<option value='25'>
+							<option value='26'>
+							<option value='27'>
+							<option value='28'>
+							<option value='29'>
+							<option value='30'>
+							<option value='31'>
+						</datalist>
+					<br><br>
+					<label>Day: </label>
+					<input list='pivotdays' name='day'>
+						<datalist id='pivotdays'>
+							<option value='Monday'>
+							<option value='Tuesday'>
+							<option value='Wednesday'>
+							<option value='Thursday'>
+							<option value='Friday'>
+							<option value='Saturday'>
+							<option value='Sunday'>
+						</datalist>
+					&nbsp;&nbsp;
+					<label>Accident : </label>
+					<input list='pivotaccidents' name='accident'>
+						<datalist id='pivotaccidents'>
+							<option value='Collision with a fixed object'>
+							<option value='Collision with some other object'>
+							<option value='Collision with vehicle'>
+							<option value='Fall from or in moving vehicle'>
+							<option value='No collision and no object struck'>
+							<option value='Other accident'>
+							<option value='Struck animal'>
+							<option value='Struck Pedestrian'>
+							<option value='Vehicle overturned (no collision)'>
+						</datalist>
+					<label>Lighting : </label>
+					<input list='pivotlightings' name='lighting'>
+						<datalist id='pivotlightings'>
+							<option value='Day'>
+							<option value='Dark No street lights'>
+							<option value='Dark Street lights off'>
+							<option value='Dark Street lights on'>
+							<option value='Dark Street lights unknown'>
+							<option value='Dusk/Dawn'>
+							<option value='Unknown'>
+						</datalist>
+					<br><br>
+					<label>Definition : </label>
+					<input list='pivotdefinitions' name='definition'>
+						<datalist id='pivotdefinitions'>
+						</datalist>
+					<label>Geometry : </label>
+					<input list='pivotgeometries' name='geometry'>
+						<datalist id='pivotgeometries'>
+							<option value='Cross intersection'>
+							<option value='Dead end'>
+							<option value='Multiple intersection'>
+							<option value='Not at intersection'>
+							<option value='Private property'>
+							<option value='Road closure'>
+							<option value='T intersection'>
+							<option value='Unknown'>
+							<option value='Y intersection'>
+						</datalist>
+					<label>Severity : </label>
+					<input list='pivotseverities' name='severity'>
+						<datalist id='pivotseverities'>
+							<option value='1'>
+							<option value='2'>
+							<option value='3'>
+							<option value='4'>
+						</datalist>
+					<br><br>
+				</fieldset>
+				<fieldset class='input'>
+					<legend>Select Pivot</legend>
+					<p>Pivot a categorical column against a numerical row</p>
+					<p>Select filters on the left for a more refined search</p>
+					<p>Missing selections defaults to loading filtered data</p>
+					<br>
+					<label>Column Label: </label>
+					<input list='columns' name='column'>
+						<datalist id='columns'>
+							<option value='Reference Number'>
+							<option value='Accident Date'>
+							<option value='Accident Time'>
+							<option value='Accident Type Description'>
+							<option value='Day Description'>
+							<option value='Accident Class Description'>
+							<option value='Lighting Description'>
+							<option value='Road Geometry Description'>
+							<option value='Accident Severity'>
+							<option value='DCADesc'>
+							<option value='DCADesc'>
+							<option value='DCADesc'>
+							<option value='Speed Zone'>
+						</datalist>
+					<br><br>
+					<label>Row Label: </label>
+					<input list='rows' name='row'>
+						<datalist id='rows'>
+							<option value='Number of Vehicles Involved'>
+							<option value='Number of People Involved'>
+							<option value='Number of People Injured'>
+							<option value='Number of People Killed'>
+							<option value='Number of Healthy People'>
+							<option value='Number of Police Involved'>
+						</datalist>
+					<br><br>
+					<label>Aggregation: </label>
+					<input list='aggregations' name='aggregation'>
+						<datalist id='aggregations'>
+							<option value='Average'>
+							<option value='Maximum'>
+							<option value='Minimum'>
+							<option value='Sum'>
+						</datalist>
+					<br><br>
+				</fieldset>
+			</form>
+			<fieldset class='overflow'>
+				<input type='submit' value='Build Pivot Table'
+					onclick="submission(event, 'pivotTable', '#pivotForm', '#pivotTable')"/>
+				<table id='pivotTable'></table>
+			</fieldset>
+		</div>
+		<div id='visualTab' class='tabcontent'>
+			<ul class='subtab'>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, 'overview')">Overview</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2006')">2006</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2007')">2007</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2008')">2008</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2009')">2009</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2010')">2010</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2011')">2011</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2012')">2012</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2013')">2013</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2014')">2014</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2015')">2015</a></li>
+				<li><a href='#' class='subtablinks'
+					onclick="switchSubTab(event, '2016')">2016</a></li>
+			</ul>
+			<div id='overview' class='subtabcontent'>
+			<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotA1.png'/>
+						<img alt='' src='static/visuals/overview/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+					<p>We see a pretty even distribution, with Fridays and
+						Saturdays having slightly higher averages.</p>
+					<p>More people tend to go out during the weekend.</p>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotB1.png'/>
+						<img alt='' src='static/visuals/overview/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+					<p>Collisions with vehicles seem the most common of the
+						accident types.</p>
+					<p>More people are injured and killed when colliding with
+						fixed objects.</p>
+					<p>Trees and concrete structures can prove to be fatal to
+						speeding vehicles.</p>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotC1.png'/>
+						<img alt='' src='static/visuals/overview/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+					</figure>
+					<p>Contrary to beliefs, most accidents happen during the
+						daytime.</p>
+					<p>This might be so since most people prefer to drive
+						during the day.</p>
+					<p>It is also possible that people exercise more caution
+						during the night.</p>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotD1.png'/>
+						<img alt='' src='static/visuals/overview/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+					<p>Complicated road structures like intersections have
+						higher average incident rates</p>
+					<p>However, most of the incidents involve drivers away
+						from intersections.</p>
+					<p>Bad road conditions of non-city roads may be a factor
+						causing this.</p>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotE.png'/>
+						<figcaption>Number of Peole Involved in Different
+							Speed Zones</figcaption>
+					</figure>
+					<p>There is an increasing trend as more people are
+						involved at higher speed zones.</p>
+					<p>Driving faster causes more likelyhood to be involved
+						in an accident.</p>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/overview/plotF1.png'/>
+						<img alt='' src='static/visuals/overview/plotF2.png'/>
+						<figcaption>Variance Explained by Numerical Principle
+							Components and Heatmap</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2006' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2006/plotA1.png'/>
+						<img alt='' src='static/visuals/2006/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2006/plotB1.png'/>
+						<img alt='' src='static/visuals/2006/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2006/plotC1.png'/>
+						<img alt='' src='static/visuals/2006/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2006/plotD1.png'/>
+						<img alt='' src='static/visuals/2006/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2007' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2007/plotA1.png'/>
+						<img alt='' src='static/visuals/2007/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2007/plotB1.png'/>
+						<img alt='' src='static/visuals/2007/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2007/plotC1.png'/>
+						<img alt='' src='static/visuals/2007/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2007/plotD1.png'/>
+						<img alt='' src='static/visuals/2007/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2008' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2008/plotA1.png'/>
+						<img alt='' src='static/visuals/2008/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2008/plotB1.png'/>
+						<img alt='' src='static/visuals/2008/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2008/plotC1.png'/>
+						<img alt='' src='static/visuals/2008/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2008/plotD1.png'/>
+						<img alt='' src='static/visuals/2008/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2009' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2009/plotA1.png'/>
+						<img alt='' src='static/visuals/2009/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2009/plotB1.png'/>
+						<img alt='' src='static/visuals/2009/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2009/plotC1.png'/>
+						<img alt='' src='static/visuals/2009/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2009/plotD1.png'/>
+						<img alt='' src='static/visuals/2009/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2010' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2010/plotA1.png'/>
+						<img alt='' src='static/visuals/2010/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2010/plotB1.png'/>
+						<img alt='' src='static/visuals/2010/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2010/plotC1.png'/>
+						<img alt='' src='static/visuals/2010/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2010/plotD1.png'/>
+						<img alt='' src='static/visuals/2010/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2011' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2011/plotA1.png'/>
+						<img alt='' src='static/visuals/2011/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2011/plotB1.png'/>
+						<img alt='' src='static/visuals/2011/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2011/plotC1.png'/>
+						<img alt='' src='static/visuals/2011/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2011/plotD1.png'/>
+						<img alt='' src='static/visuals/2011/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2012' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2012/plotA1.png'/>
+						<img alt='' src='static/visuals/2012/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2012/plotB1.png'/>
+						<img alt='' src='static/visuals/2012/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2012/plotC1.png'/>
+						<img alt='' src='static/visuals/2012/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2012/plotD1.png'/>
+						<img alt='' src='static/visuals/2012/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2013' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2013/plotA1.png'/>
+						<img alt='' src='static/visuals/2013/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2013/plotB1.png'/>
+						<img alt='' src='static/visuals/2013/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2013/plotC1.png'/>
+						<img alt='' src='static/visuals/2013/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2013/plotD1.png'/>
+						<img alt='' src='static/visuals/2013/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2014' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2014/plotA1.png'/>
+						<img alt='' src='static/visuals/2014/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2014/plotB1.png'/>
+						<img alt='' src='static/visuals/2014/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2014/plotC1.png'/>
+						<img alt='' src='static/visuals/2014/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2014/plotD1.png'/>
+						<img alt='' src='static/visuals/2014/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2015' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2015/plotA1.png'/>
+						<img alt='' src='static/visuals/2015/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2015/plotB1.png'/>
+						<img alt='' src='static/visuals/2015/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2015/plotC1.png'/>
+						<img alt='' src='static/visuals/2015/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2015/plotD1.png'/>
+						<img alt='' src='static/visuals/2015/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+			<div id='2016' class='subtabcontent'>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2016/plotA1.png'/>
+						<img alt='' src='static/visuals/2016/plotA2.png'/>
+						<figcaption>Accidents by Day</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2016/plotB1.png'/>
+						<img alt='' src='static/visuals/2016/plotB2.png'/>
+						<figcaption>Accidents by Type</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2016/plotC1.png'/>
+						<img alt='' src='static/visuals/2016/plotC2.png'/>
+						<figcaption>Accidents by Light Conditions</figcaption>
+					</figure>
+				</fieldset>
+				<fieldset>
+					<figure>
+						<img alt='' src='static/visuals/2016/plotD1.png'/>
+						<img alt='' src='static/visuals/2016/plotD2.png'/>
+						<figcaption>Accidents by Road Geometry</figcaption>
+					</figure>
+				</fieldset>
+			</div>
+		</div>
+		<div id='mapTab' class='tabcontent'>
+			<fieldset class='large'>
+				<figure>
+					<img alt='' class='map' src='static/visuals/overview/plotG.png'/>
+					<figcaption>Map of accident locations in Victoria
+						from 2006 to 2016</figcaption>
+				</figure>
+				<p>Legend :</p>
+				<p>Yellow : Northern Region</p>
+				<p>Blue : Eastern Region</p>
+				<p>Red : Western Region</p>
+				<p>Green : North Eastern Region</p>
+				<p>Sky Blue : Metropolitan North West Region</p>
+				<p>Orange : South Western Region</p>
+				<p>Turquoise : Metropolitan South East Region</p>
+				<br>
+				<p>A total of 142573 accidents have been recorded from 2006
+					till 2016.</p>
+				<p>From the map, most accidents are concentrated around the
+					metropolitan areas.</p>
+				<p>This could be due to the higher volume of traffic present
+					in Melbourne and its surrounding suburbs.</p>
+			</fieldset>
+		</div>
+		<div id='aboutTab' class='tabcontent'>
+			<h3>FRI16_6</h3>
+			<br>
+			<h3>Ivan Ken Weng Chee</h3>
+			<h3>736901</h3>
+			<h3>ichee@student.unimelb.edu.au</h3>
+			<br>
+			<h3>Bowen Lu</h3>
+			<h3>685020</h3>
+			<h3>b.lu7@student.unimelb.edu.au</h3>
+		</div>
+	</body>
+</html>

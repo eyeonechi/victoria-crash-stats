@@ -1,8 +1,10 @@
 import codecs as cd
 import flask as fls
+import json
 import matplotlib.pyplot as plt
 import mpl_toolkits.basemap as bm
 import numpy as np
+import os
 import pandas as pd
 import seaborn as sns
 import sklearn.preprocessing as sp
@@ -158,7 +160,7 @@ def visualiseData(data):
           'Average Involved in Accidents by Road Geometry')
     plotE(data)
     plotF(data)
-    node = openData('../data/node.csv')
+    node = openData('data/node.csv')
     plotG(node)
 
 # Plot graphs related to day.
@@ -240,9 +242,9 @@ def plotE(data):
     data['DateTime'] = pd.to_datetime(data.DateTime.astype(str),
     	format='%d/%m/%Y:%H.%M.%S')
     data = data[data['Zone'] < 200]
-    fig = sns.FacetGrid(data=data, hue='AccType', size=8, aspect=1.4)
+    fig = sns.FacetGrid(data=data, hue='AccType', height=8, aspect=1.4)
     fig.map(plt.scatter, 'Zone', 'NumPersons').add_legend()
-    sns.plt.title('Number of People Involved in Different Speed Zones')
+    plt.title('Number of People Involved in Different Speed Zones')
     plt.show()
 
 # Plots a heatmap of the datasets principle components
@@ -270,6 +272,7 @@ def plotG(data):
     datamap.arcgisimage(service='ESRI_Imagery_World_2D',
         xpixels=1024, verbose=True)
     datamap.drawrivers(color="aqua")
+    data['Region Name'] = data['Region Name'].astype(str)
     categories = np.unique(data['Region Name'])
     colors = np.linspace(0, 1, len(categories))
     colordict = dict(zip(categories, colors))
@@ -281,43 +284,49 @@ def plotG(data):
 
 # Handles the main process of data wrangling.
 def main():
-    data = openData('../data/accident.csv')
+    data = openData('data/accident.csv')
     data = renameData(data, renameDict)
     data['NumInjured'] = data.NumInjured2 + data.NumInjured3
     data = cleanData(data, ['NumInjured2', 'NumInjured3'])
-    saveData(data, '../data/accident_cleaned.csv')
-    data = openData('../data/accident_cleaned.csv')
+    saveData(data, 'data/accident_cleaned.csv')
+    data = openData('data/accident_cleaned.csv')
     data = cleanData(data, 'Unnamed: 0')
     visualiseData(data)
 
 # Interacts with javascript through client-server processing.
-app = fls.app.Flask(__name__)
+app = fls.app.Flask(__name__, template_folder='templates')
+
+@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
+def index():
+    return fls.render_template('victoria_crash_stats.html', title='Home')
+
 @app.route('/submission', methods=['GET', 'POST'])
 def submission():
     callback = fls.request.args.get('callback')
-    method = str(fls.request.args.get('method'))
+    method = json.loads(fls.request.data)['method']
     if method == 'dataset':
-        return '{}({})'.format(callback, dataset(method))
+        return json.dumps(dataset(method))
     elif method == 'pivotTable':
-        return '{}({})'.format(callback, pivotTable(method))
+        return json.dumps(pivotTable(method))
     else:
         return '{}({})'.format(callback, error())
 
 # Processes dataset and returns it to client.
 def dataset(method):
-    accident = str(fls.request.args.get('accident'))
-    date = str(fls.request.args.get('date'))
-    day = str(fls.request.args.get('day'))
-    definition = str(fls.request.args.get('definition'))
-    geometry = str(fls.request.args.get('geometry'))
-    lighting = str(fls.request.args.get('lighting'))
-    month = str(fls.request.args.get('month'))
-    severity = str(fls.request.args.get('severity'))
-    year = str(fls.request.args.get('year'))
-    data = openData('../data/accident_cleaned.csv')
+    requestData = json.loads(fls.request.data)
+    accident = requestData['accident']
+    date = requestData['date']
+    day = requestData['day']
+    definition = requestData['definition']
+    geometry = requestData['geometry']
+    lighting = requestData['lighting']
+    month = requestData['month']
+    severity = requestData['severity']
+    year = requestData['year']
+    data = openData('data/accident_cleaned.csv')
     data = cleanData(data, 'Unnamed: 0')
-    data = filterData(data, accident, date, day, definition, geometry,
-    	lighting, month, severity, year)
+    data = filterData(data, accident, date, day, definition, geometry, lighting, month, severity, year)
     if method == 'pivotTable':
         return data
     data['Index'] = range(len(data))
@@ -326,11 +335,12 @@ def dataset(method):
 
 # Returns pivoted dataset to client.
 def pivotTable(method):
-    agg = fls.request.args.get('aggregation')
+    requestData = json.loads(fls.request.data)
+    agg = requestData['aggregation']
     agg = pivotDict[agg] if agg in pivotDict else 'Mean'
-    column = fls.request.args.get('column')
+    column = requestData['column']
     column = referenceDict[column] if column in referenceDict else None
-    row = fls.request.args.get('row')
+    row = requestData['row']
     row = referenceDict[row] if row in referenceDict else None
     data = dataset(method)
     data = pivotData(data, column, row, agg)
@@ -341,10 +351,8 @@ def pivotTable(method):
 def error():
     return 'error'
 
-def main():
-    # Run server handling section.
-    app.run(debug=True, host='127.0.0.1', port=80)
-    # Run data processing section.
-
 if __name__ == '__main__':
-    main()
+    # Run data processing section.
+    # main()
+    # Run server handling section.
+    app.run(port=os.environ.get('PORT'))
