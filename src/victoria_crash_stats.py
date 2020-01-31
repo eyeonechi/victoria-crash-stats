@@ -2,7 +2,7 @@ import codecs as cd
 import flask as fls
 import json
 import matplotlib.pyplot as plt
-import mpl_toolkits.basemap as bm
+# import mpl_toolkits.basemap as bm
 import numpy as np
 import os
 import pandas as pd
@@ -266,9 +266,9 @@ def plotF(data):
 # Plots a map of accident coordinates.
 def plotG(data):
     plt.figure(figsize=(16,10))
-    datamap = bm.Basemap(projection='merc', lat_0=-37.4713, lon_0=144.7852,
-        resolution='l', epsg=4326, area_thresh=0.1, llcrnrlat=-39.188314,
-        llcrnrlon=140.711512, urcrnrlat=-33.922496, urcrnrlon=150.052936)
+    # datamap = bm.Basemap(projection='merc', lat_0=-37.4713, lon_0=144.7852,
+    #     resolution='l', epsg=4326, area_thresh=0.1, llcrnrlat=-39.188314,
+    #     llcrnrlon=140.711512, urcrnrlat=-33.922496, urcrnrlon=150.052936)
     datamap.arcgisimage(service='ESRI_Imagery_World_2D',
         xpixels=1024, verbose=True)
     datamap.drawrivers(color="aqua")
