@@ -4,6 +4,7 @@ import json
 import matplotlib.pyplot as plt
 # import mpl_toolkits.basemap as bm
 import numpy as np
+import os
 import pandas as pd
 import seaborn as sns
 import sklearn.preprocessing as sp
@@ -354,4 +355,4 @@ if __name__ == '__main__':
     # Run data processing section.
     # main()
     # Run server handling section.
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=os.environ.get('PORT', 5000))
